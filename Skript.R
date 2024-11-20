@@ -19,7 +19,7 @@ remove(...)
 data_clean <- data[complete.cases(data), ]
 
 #Entfernt Spalte im Datensatz mit dem Namen "X"
-data_clean <- data_clean[,!names(data_clean) %in% c("X")]
+
 
 # yes = 1
 # no  = 0
