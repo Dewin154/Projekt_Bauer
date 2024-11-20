@@ -8,8 +8,11 @@ View(data)
 remove(data)
 
 NA_count <- colSums(is.na(data))
-print(na_counts_base)
+print(NA_count)
 
 data$hasElevator[data2$hasElevator == ""] <- "no"
 
 remove(...)
+
+#Bereinigt die NA Zeilen
+data_clean <- data[complete.cases(data), ]
