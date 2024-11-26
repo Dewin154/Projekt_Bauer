@@ -2,8 +2,10 @@ setwd("C:/Users/peter/Desktop/THD/3 Semester/Assistenzsysteme/Projekt_Bauer")
 
 data <- read.csv("apartments_rent_pl_2024_06.csv", header=TRUE, sep=",", fill=TRUE, stringsAsFactors = TRUE)
 data <- read.csv("apartments_rent_pl_2024_06_bereinigt.csv", header=TRUE, sep=",", fill=TRUE, stringsAsFactors = TRUE)
-
+data2 <-
 View(data)
+
+#Löscht alle NA Einträge
 data_omit <- na.omit(data)
 
 remove(data)
@@ -28,8 +30,7 @@ remove(...)
 data_clean <- data[complete.cases(data), ]
 
 #Entfernt Spalte im Datensatz mit dem Namen "X"
-
-
+data2 <- data2[, !names(data2) %in% "id"]
 # yes = 1
 # no  = 0
 
@@ -61,4 +62,11 @@ data_clean$clinicDistance <- as.numeric(gsub(",", ".", as.character(data_clean$c
 data_clean$pharmacyDistance <- as.numeric(gsub(",", ".", as.character(data_clean$pharmacyDistance)))
 data_clean$kindergartenDistance <- as.numeric(gsub(",", ".", as.character(data_clean$kindergartenDistance)))
 data_clean$priceInEuro <- as.numeric(gsub(",", ".", as.character(data_clean$priceInEuro)))
+
+#Zählt die Anzahl aller Einträge pro Stadt
+city_counts <- table(data$city)
+
+#Sortiert die Städte
+city_counts_sorted <- as.data.frame(city_counts[order(-city_counts)]) # Sort in descending order
+View(city_counts_sorted)
 
