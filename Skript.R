@@ -35,7 +35,8 @@ data2 <- data2[, !names(data2) %in% "id"]
 # no  = 0
 
 #Multiple Linear Regression
-modell <- lm(priceInEuro~city+squareMeters+rooms+floor+buildYear+centreDistance+schoolDistance+clinicDistance+kindergartenDistance+pharmacyDistance+hasParkingSpace+hasBalcony+hasElevator+hasStorageRoom, data = data_clean)
+
+modell <- lm(priceInEuro~city+squareMeters+rooms+floor+buildYear+centreDistance+schoolDistance+clinicDistance+hasParkingSpace+hasBalcony+hasElevator, data = data)
 summary(modell)
 
 #Konvertieren in Double !!Vorsicht
