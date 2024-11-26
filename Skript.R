@@ -4,15 +4,24 @@ data <- read.csv("apartments_rent_pl_2024_06.csv", header=TRUE, sep=",", fill=TR
 data <- read.csv("apartments_rent_pl_2024_06_bereinigt.csv", header=TRUE, sep=",", fill=TRUE, stringsAsFactors = TRUE)
 
 View(data)
+data_omit <- na.omit(data)
 
 remove(data)
 
-NA_count <- colSums(is.na(data))
+#Zählt die Anzahl der Spalten mit dem Wert NA
+na_count <- colSums(is.na(data))
 print(NA_count)
+
+#Findet genaue Zeilen in der Spalte die einen NA Wert enthält und erstellt eine Variable
+na_rows <- which(is.na(data$clinicDistance))
+
+#Zeigt die Zeilen mit NA an
+View(data[is.na(data$clinicDistance), ])
 
 #Ersetzt leere Balken mit "no"
 data$hasElevator[data2$hasElevator == ""] <- "no"
 
+#Entfernt Datensatz, Variablen z.B.: remove(data) löscht den Datensatz
 remove(...)
 
 #Bereinigt die NA Zeilen
