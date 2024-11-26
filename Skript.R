@@ -2,7 +2,7 @@ setwd("C:/Users/peter/Desktop/THD/3 Semester/Assistenzsysteme/Projekt_Bauer")
 
 data <- read.csv("apartments_rent_pl_2024_06.csv", header=TRUE, sep=",", fill=TRUE, stringsAsFactors = TRUE)
 data <- read.csv("apartments_rent_pl_2024_06_bereinigt.csv", header=TRUE, sep=",", fill=TRUE, stringsAsFactors = TRUE)
-data2 <-
+
 View(data)
 
 #Löscht alle NA Einträge
@@ -71,3 +71,6 @@ city_counts <- table(data$city)
 city_counts_sorted <- as.data.frame(city_counts[order(-city_counts)]) # Sort in descending order
 View(city_counts_sorted)
 
+#Exportiert den Datensatz im R als CSV
+write.csv(df, "specify_path_and_file_name.csv")
+write.csv(data, "C:/Users/peter/THD/3_Semester/Assistenzsysteme/Projekt_Bauer/datensatz_bereinigt.csv",row.names = FALSE)
