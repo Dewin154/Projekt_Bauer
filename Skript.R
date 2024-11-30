@@ -30,13 +30,13 @@ remove(...)
 data_clean <- data[complete.cases(data), ]
 
 #Entfernt Spalte im Datensatz mit dem Namen "X"
-data2 <- data2[, !names(data2) %in% "id"]
+data <- data[, !names(data) %in% "X"]
 # yes = 1
 # no  = 0
 
 #Multiple Linear Regression
 
-modell <- lm(priceInEuro~city+squareMeters+rooms+floor+buildYear+centreDistance+schoolDistance+clinicDistance+hasParkingSpace+hasBalcony+hasElevator, data = data)
+modell <- lm(priceInEuro~city+squareMeters+rooms+floor+buildYear+centreDistance+schoolDistance+hasParkingSpace+hasBalcony+hasElevator, data = data)
 summary(modell)
 
 #Konvertieren in Double !!Vorsicht
