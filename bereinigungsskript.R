@@ -1,6 +1,8 @@
-setwd("C:/Users/peter/Desktop/THD/3 Semester/Assistenzsysteme/Projekt_Bauer")
+#setwd("C:/Users/peter/Desktop/THD/3 Semester/Assistenzsysteme/Projekt_Bauer")
+#print(dirname(rstudioapi::getActiveDocumentContext()$path))
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
-data <- read.csv("apartments_rent_pl_2024_06.csv", header=TRUE, sep=",", fill=TRUE, stringsAsFactors = TRUE)
+#data <- read.csv("apartments_rent_pl_2024_06.csv", header=TRUE, sep=",", fill=TRUE, stringsAsFactors = TRUE)
 data <- read.csv("datensatz_bereinigt.csv", header=TRUE, sep=",", fill=TRUE, stringsAsFactors = TRUE)
 
 View(data)
@@ -12,7 +14,7 @@ remove(data)
 
 #Zählt die Anzahl der Spalten mit dem Wert NA
 na_count <- colSums(is.na(data))
-print(NA_count)
+print(na_count)
 
 #Findet genaue Zeilen in der Spalte die einen NA Wert enthält und erstellt eine Variable
 na_rows <- which(is.na(data$clinicDistance))
