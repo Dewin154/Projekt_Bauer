@@ -80,3 +80,10 @@ write.csv(data, "C:/Users/peter/THD/3_Semester/Assistenzsysteme/Projekt_Bauer/da
 #Speichert die Arbeitsumgebung wie beim Schließen des Projekts
 save.image(file = "C:/Users/peter/THD/3_Semester/Assistenzsysteme/Projekt_Bauer/.RData")
 
+
+#Aufteilung des Datensatzes
+count_of_rows <- nrow(data)
+set.seed(123)
+training_indices <- sample(1:count_of_rows, size = 0.8 * count_of_rows)
+train_data <- data[training_indices, ]
+test_data <- data[-training_indices, ]
