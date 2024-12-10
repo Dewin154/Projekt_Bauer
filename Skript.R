@@ -87,3 +87,13 @@ set.seed(123)
 training_indices <- sample(1:count_of_rows, size = 0.8 * count_of_rows)
 train_data <- data[training_indices, ]
 test_data <- data[-training_indices, ]
+
+
+#Korrelationsmatrix erstellen
+install.packages("corrplot")
+library(corrplot)
+cor_matrix <- cor(data3, use = "complete.obs")
+corrplot(cor_matrix, method = "color", 
+                   col = colorRampPalette(c("red", "white", "blue"))(200),
+                   tl.col = "black", tl.srt = 45, addCoef.col = "black")
+
