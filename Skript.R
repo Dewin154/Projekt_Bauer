@@ -97,3 +97,9 @@ corrplot(cor_matrix, method = "color",
                    col = colorRampPalette(c("red", "white", "blue"))(200),
                    tl.col = "black", tl.srt = 45, addCoef.col = "black")
 
+
+
+
+# Run the app ----
+shinyApp(ui = ui, server = server)
+

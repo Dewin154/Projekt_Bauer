@@ -8,34 +8,81 @@
 #
 
 library(shiny)
+library(bslib)
+library(leaflet)
 
-# Define UI for application that draws a histogram
-fluidPage(
-
-    # Application title
-    titlePanel("Old Faithful Geyser Data"),
-
-    # Sidebar with a slider input for number of bins
-    sidebarLayout(
-        sidebarPanel(
-            sliderInput("bins",
-                        "Number of bins:",
-                        min = 1,
-                        max = 50,
-                        value = 30)
+# Definiert UI, page_sidebar ist nur ein von vielen Layouts
+ui <- page_sidebar(
+  
+  title = "Mietpreise in Polen",
+  # Beinhaltet alle sidebar elemente wie action boxes etc.
+  sidebar = sidebar(
+    
+    actionButton("action", label = "Action Button"),
+    
+    checkboxGroupInput("variable", "Checkboxes:",
+                       c("Parkplatz" = "cyl",
+                         "Balkon" = "am",
+                         "Aufzug" = "gear")),
+    
+    numericInput("obs", "Numeric Input", 0, min = 1, max = 10000),
+    
+    selectInput(
+      "var",
+      label = "Stadt Wählen",
+      choices = 
+        list(
+          "Warszawa", 
+          "Krakow", 
+          "Wroclaw", 
+          "Lodz",
+          "Poznan",
+          "Katowice",
+          "Gdansk",
+          "Szczecin",
+          "Lublin",
+          "Bydgoszcz",
+          "Rzeszow",
+          "Gdynia",
+          "Bialystok",
+          "Radom",
+          "Czestochowa"
         ),
-
-        # Show a plot of the generated distribution
-        mainPanel(
-            plotOutput("distPlot")
-        )
+      selected="Warszawa"
+    ),
+    
+    sliderInput(
+      "obs", "Jahr",
+      min = 1970, max = 2024, value = 1970, dragRange = FALSE, sep ="", ticks = FALSE,
     )
-)
+  ),
+  
+  "Output",
+  
+  #card ist in Shiny das was <div> in HTML ist
+  card(
+    card_body(
+      value_box(
+        title = "Prognostizierter Mietpreis",
+        value = 100,
+        showcase = bsicons::bs_icon("house-check-fill",size = "0.9em"), #https://icons.getbootstrap.com/ alle möglichen icons
+        theme = "teal"
+      ),
+    )
+  ),
+  
+  
+  card(
+    card_header("Interaktive Karte"),
+    card_body(
+      leafletOutput("mymap"),
+      )
+    ),
+  
+  card(
+    leafletOutput("mymap2")
+  )
+  
+  )
 
 
-fluidPage(
-  
-  
-  titlePanel("HEllo")
-  
-)

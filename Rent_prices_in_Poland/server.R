@@ -8,21 +8,32 @@
 #
 
 library(shiny)
+library(bslib)
+library(leaflet)
 
-# Define server logic required to draw a histogram
-function(input, output, session) {
-
-    output$distPlot <- renderPlot({
-
-        # generate bins based on input$bins from ui.R
-        x    <- faithful[, 2]
-        bins <- seq(min(x), max(x), length.out = input$bins + 1)
-
-        # draw the histogram with the specified number of bins
-        hist(x, breaks = bins, col = 'darkgray', border = 'white',
-             xlab = 'Waiting time to next eruption (in mins)',
-             main = 'Histogram of waiting times')
-
-    })
-
+# Define server logic ----
+server <- function(input, output) {
+  
+  #Der %>%-Operator ist ein Pipe Operator, Output der einen Funktion ist Input für die Andere.
+  
+  output$mymap <- renderLeaflet(
+    leaflet() %>%
+      addProviderTiles(
+        providers$CartoDB.Positron,
+        options = providerTileOptions(noWrap = TRUE)
+      ) %>%
+      fitBounds(
+        lng1 = 14.07, lat1 = 49.00, # Southwest corner of Poland
+        lng2 = 24.15, lat2 = 54.83  # Northeast corner of Poland
+      )
+  )
+  #Nur zum testen hier, wie output, cards usw. funktionieren
+  output$mymap2 <- renderLeaflet(
+    leaflet() %>%
+      addProviderTiles(
+        providers$CartoDB.Positron,
+        options = providerTileOptions(noWrap = TRUE)
+      )
+  )
+  
 }
