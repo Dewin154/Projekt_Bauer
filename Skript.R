@@ -92,14 +92,29 @@ test_data <- data[-training_indices, ]
 #Korrelationsmatrix erstellen
 install.packages("corrplot")
 library(corrplot)
-cor_matrix <- cor(data3, use = "complete.obs")
+cor_matrix <- cor(data3, use = "complete.obs") #Matrix erstellen
+
 corrplot(cor_matrix, method = "color", 
                    col = colorRampPalette(c("red", "white", "blue"))(200),
-                   tl.col = "black", tl.srt = 45, addCoef.col = "black")
+                   tl.col = "black", tl.srt = 45, addCoef.col = "black") #Plot erstellen
 
 
 
 
 # Run the app ----
 shinyApp(ui = ui, server = server)
+
+#Vorhersage treffen
+test_data_merkmale <- test_data[, !names(test_data) %in% "priceInEuro"]  # Features
+test_data_zielvariable <- test_data$priceInEuro                             # Target
+predictions <- predict(modell_linear, newdata = test_data_merkmale)
+
+#Berechne MAE, MSE, r squared
+mae <- mean(abs(test_data_zielvariable - predictions))
+
+mse <- mean((test_data_zielvariable - predictions)^2)
+
+r2 <- 1 - (sum((test_data_zielvariable - predictions)^2) / sum((test_data_zielvariable - mean(test_data_zielvariable))^2))
+
+
 
