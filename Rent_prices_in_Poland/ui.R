@@ -11,10 +11,24 @@ library(shiny)
 library(bslib)
 library(leaflet)
 
-# Definiert UI, page_sidebar ist nur ein von vielen Layouts
+thematic::thematic_on() #dynamisches anpassen der plots an UI Theme
+
+# Definiert UI, page_sidebar ist nur ein von vielen Layouts                                     
 ui <- page_sidebar(
-  
-  title = "Mietpreise in Polen",
+ 
+  #Title Block mit Elementen. Kann wie HTML bearbeitet werden
+  title = tagList(
+    tags$span(
+      "Mietpreise in Polen", 
+      style = "font-size: 30px; font-family: Arial, sans-serif;"
+    ),
+    
+    tags$div(
+      input_dark_mode(), # Button for Dark Mode
+      style = "font-size: 25px;"
+    )
+    
+  ),
   # Beinhaltet alle sidebar elemente wie action boxes etc.
   sidebar = sidebar(
     

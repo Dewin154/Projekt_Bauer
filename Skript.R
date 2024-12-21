@@ -2,6 +2,9 @@
 #print(dirname(rstudioapi::getActiveDocumentContext()$path))
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
+#install custom theme 
+rstudioapi::addTheme("https://raw.githubusercontent.com/SofieDunt/darculaR-rstheme/main/darculaR.rstheme", apply = TRUE)
+
 #data <- read.csv("apartments_rent_pl_2024_06.csv", header=TRUE, sep=",", fill=TRUE, stringsAsFactors = TRUE)
 data <- read.csv("datensatz_bereinigt.csv", header=TRUE, sep=",", fill=TRUE, stringsAsFactors = TRUE)
 
