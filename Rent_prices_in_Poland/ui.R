@@ -10,6 +10,7 @@
 library(shiny)
 library(bslib)
 library(leaflet)
+library(shinyBS)
 
 thematic::thematic_on() #dynamisches anpassen der plots an UI Theme
 
@@ -32,17 +33,10 @@ ui <- page_sidebar(
   # Beinhaltet alle sidebar elemente wie action boxes etc.
   sidebar = sidebar(
     
-    actionButton("action", label = "Action Button"),
-    
-    checkboxGroupInput("variable", "Checkboxes:",
-                       c("Parkplatz" = "cyl",
-                         "Balkon" = "am",
-                         "Aufzug" = "gear")),
-    
-    numericInput("obs", "Numeric Input", 0, min = 1, max = 10000),
+    actionButton("action_search", label = "Suchen"),
     
     selectInput(
-      "var",
+      "input_city",
       label = "Stadt Wählen",
       choices = 
         list(
@@ -65,11 +59,36 @@ ui <- page_sidebar(
       selected="Warszawa"
     ),
     
+    checkboxGroupInput("input_checkbox", "Ausstattung:",
+                       c("Parkplatz" = "parking_space",
+                         "Balkon" = "balcony",
+                         "Aufzug" = "elevator")),
+    
+    numericInput("input_squaremeters", "Quadratmeter", 0, min = 1, max = 10000),
+    
+    numericInput("input_rooms", "Anzahl der Räume", 0, min = 1, max = 10),
+ 
+    numericInput("input_floor", "Stockwerk", 0, min = 1, max = 20),
+    
+    
     sliderInput(
-      "obs", "Jahr",
+      "input_buildyear", "Baujahr",
       min = 1970, max = 2024, value = 1970, dragRange = FALSE, sep ="", ticks = FALSE,
+    ),
+    
+    sliderInput(
+      "input_centrum", "Entfernung zum Zentrum in km",
+      min = 0, max = 15, value = 0, step = 0.5, dragRange = FALSE, sep ="", ticks = FALSE,
+    ),
+    
+    sliderInput(
+      "input_school", "Entfernung zur Schule in km",
+      min = 0, max = 4, value = 0, step = 0.5, dragRange = FALSE, sep ="", ticks = FALSE,
     )
+
+    
   ),
+  
   
   "Output",
   
@@ -78,7 +97,7 @@ ui <- page_sidebar(
     card_body(
       value_box(
         title = "Prognostizierter Mietpreis",
-        value = 100,
+        value = textOutput("predicted_price"),
         showcase = bsicons::bs_icon("house-check-fill",size = "0.9em"), #https://icons.getbootstrap.com/ alle möglichen icons
         theme = "teal"
       ),
