@@ -105,7 +105,7 @@ corrplot(cor_matrix, method = "color",
 
 
 # Run the app ----
-shinyApp(ui = ui, server = server)
+shiny::runApp()
 
 #Vorhersage treffen
 test_data_merkmale <- test_data[, !names(test_data) %in% "priceInEuro"]  # Features
