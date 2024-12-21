@@ -59,10 +59,14 @@ ui <- page_sidebar(
       selected="Warszawa"
     ),
     
-    checkboxGroupInput("input_checkbox", "Ausstattung:",
-                       c("Parkplatz" = "parking_space",
-                         "Balkon" = "balcony",
-                         "Aufzug" = "elevator")),
+    #checkboxGroupInput("input_checkbox", "Ausstattung:",
+    #                   c("Parkplatz" = "parking_space",
+    #                     "Balkon" = "balcony",
+    #                     "Aufzug" = "elevator")),
+    
+    checkboxInput("parking_space", "Parkplatz", value = FALSE, width = NULL),
+    checkboxInput("balcony", "Balkon", value = FALSE, width = NULL),
+    checkboxInput("elevator", "Aufzug", value = FALSE, width = NULL),
     
     numericInput("input_squaremeters", "Quadratmeter", 0, min = 1, max = 10000),
     
@@ -84,9 +88,8 @@ ui <- page_sidebar(
     sliderInput(
       "input_school", "Entfernung zur Schule in km",
       min = 0, max = 4, value = 0, step = 0.5, dragRange = FALSE, sep ="", ticks = FALSE,
-    )
+    ),
 
-    
   ),
   
   
