@@ -64,6 +64,8 @@ ui <- page_sidebar(
     #                     "Balkon" = "balcony",
     #                     "Aufzug" = "elevator")),
     
+    
+    #Hier wegen Einfachkeit. Leichtere Handhabung in server.R bei der Berechnung des prog. Preises
     checkboxInput("parking_space", "Parkplatz", value = FALSE, width = NULL),
     checkboxInput("balcony", "Balkon", value = FALSE, width = NULL),
     checkboxInput("elevator", "Aufzug", value = FALSE, width = NULL),
@@ -77,7 +79,7 @@ ui <- page_sidebar(
     
     sliderInput(
       "input_buildyear", "Baujahr",
-      min = 1970, max = 2024, value = 1970, dragRange = FALSE, sep ="", ticks = FALSE,
+      min = 1900, max = 2024, value = 1970, dragRange = FALSE, sep ="", ticks = FALSE,
     ),
     
     sliderInput(
@@ -106,7 +108,6 @@ ui <- page_sidebar(
       ),
     )
   ),
-  
   
   card(
     card_header("Interaktive Karte"),

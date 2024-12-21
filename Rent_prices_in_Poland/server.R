@@ -15,11 +15,13 @@ library(shinyBS)
 # Define server logic ----
 server <- function(input, output) {
   
+  #Model wird bei jedem öffnen der App geladen
   modell_linear <- readRDS("C:/Users/peter/THD/3_Semester/Assistenzsysteme/Projekt_Bauer/Rent_prices_in_Poland/modell_linear.rds")
   
+  #Die Berechnung des prognostizierten Preises
   price_prediction <- eventReactive(input$action_search, {
-    # Process features
-    feature_city <- tolower(as.character(input$input_city))  # Convert to lowercase for consistency
+    
+    feature_city <- tolower(as.character(input$input_city))  
     feature_sqm <- as.numeric(input$input_squaremeters)
     feature_rooms <- as.integer(input$input_rooms)
     feature_school <- as.numeric(input$input_school)
@@ -30,7 +32,7 @@ server <- function(input, output) {
     feature_hasBalcony <- ifelse(input$balcony, "yes", "no")
     feature_hasElevator <- ifelse(input$elevator, "yes", "no")
     
-    # Combine features into one dataframe
+    # Alle Features in ein Data Frame packen
     model_features <- data.frame(
       city = feature_city,
       squareMeters = feature_sqm,
@@ -45,13 +47,18 @@ server <- function(input, output) {
       stringsAsFactors = FALSE  # Avoid factor conversion
     )
     
-   
+    #Eigentliche Berechnung
     prediction <- predict(modell_linear, newdata = model_features)
-
-    return(round(prediction, 2))
+    
+    if (prediction <= 0){
+      return(NA)
+    } else {
+      return(round(prediction, 2))
+    }
+    
   })
   
-  # Output predicted price
+  # Output des prognostizierten Preises
   output$predicted_price <- renderText({
     paste0(price_prediction(), " €")
   })

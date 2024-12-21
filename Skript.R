@@ -120,4 +120,11 @@ mse <- mean((test_data_zielvariable - predictions)^2)
 r2 <- 1 - (sum((test_data_zielvariable - predictions)^2) / sum((test_data_zielvariable - mean(test_data_zielvariable))^2))
 
 
+#Model speichern damit er für andere in der App verfügbar ist. Model soll im ordner der Shiny App gespeichert werden
+saveRDS(modell_linear, "C:/Users/peter/THD/3_Semester/Assistenzsysteme/Projekt_Bauer/Rent_prices_in_Poland/modell_linear.rds")
+
+
+
+
+
 
