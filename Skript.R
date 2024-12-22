@@ -60,14 +60,14 @@ data_clean$floor <- as.factor(data_clean$floor)
 data_clean$squareMeters <- as.numeric(data_clean$squareMeters)
 
 #Richtiges Konvertieren (von Factor auf Numeric), erst werden die daten als character konvertiert, die Kommata für Punkte ersetzt (englische Schreibweise) und dann ins Numeric Konvertiert
-data_clean$squareMeters <- as.numeric(gsub(",", ".", as.character(data_clean$squareMeters)))
-data_clean$squareMeters <- as.numeric(gsub(",", ".", as.character(data_clean$squareMeters)))
-data_clean$centreDistance <- as.numeric(gsub(",", ".", as.character(data_clean$centreDistance)))
-data_clean$schoolDistance <- as.numeric(gsub(",", ".", as.character(data_clean$schoolDistance)))
-data_clean$clinicDistance <- as.numeric(gsub(",", ".", as.character(data_clean$clinicDistance)))
-data_clean$pharmacyDistance <- as.numeric(gsub(",", ".", as.character(data_clean$pharmacyDistance)))
-data_clean$kindergartenDistance <- as.numeric(gsub(",", ".", as.character(data_clean$kindergartenDistance)))
-data_clean$priceInEuro <- as.numeric(gsub(",", ".", as.character(data_clean$priceInEuro)))
+orig_data$squareMeters <- as.numeric(gsub(",", ".", as.character(orig_data$squareMeters)))
+orig_data$squareMeters <- as.numeric(gsub(",", ".", as.character(orig_data$squareMeters)))
+orig_data$centreDistance <- as.numeric(gsub(",", ".", as.character(orig_data$centreDistance)))
+orig_data$schoolDistance <- as.numeric(gsub(",", ".", as.character(orig_data$schoolDistance)))
+orig_data$clinicDistance <- as.numeric(gsub(",", ".", as.character(orig_data$clinicDistance)))
+orig_data$pharmacyDistance <- as.numeric(gsub(",", ".", as.character(orig_data$pharmacyDistance)))
+orig_data$kindergartenDistance <- as.numeric(gsub(",", ".", as.character(orig_data$kindergartenDistance)))
+orig_data$priceInEuro <- as.numeric(gsub(",", ".", as.character(orig_data$priceInEuro)))
 
 #Zählt die Anzahl aller Einträge pro Stadt
 city_counts <- table(data$city)
