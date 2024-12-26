@@ -16,7 +16,8 @@ library(shinyBS)
 server <- function(input, output) {
   
   #Model wird bei jedem öffnen der App geladen
-  modell_linear <- readRDS("C:/Users/peter/THD/3_Semester/Assistenzsysteme/Projekt_Bauer/Rent_prices_in_Poland/modell_linear.rds")
+  modell <- readRDS("C:/Users/peter/THD/3_Semester/Assistenzsysteme/Projekt_Bauer/Rent_prices_in_Poland/modell_log_cleaned.rds")
+  
   
   #Die Berechnung des prognostizierten Preises
   price_prediction <- eventReactive(input$action_search, {
@@ -48,7 +49,7 @@ server <- function(input, output) {
     )
     
     #Eigentliche Berechnung
-    prediction <- predict(modell_linear, newdata = model_features)
+    prediction <- exp(predict(modell, newdata = model_features)) ##### exp() FUNKTION für Log Modell
     
     if (prediction <= 0){
       return(NA)
@@ -60,7 +61,7 @@ server <- function(input, output) {
   
   # Output des prognostizierten Preises
   output$predicted_price <- renderText({
-    paste0(price_prediction(), " €")
+    paste0(price_prediction(), " € ≙ ", round(price_prediction()*4.27, 2), " zł")
   })
   
   

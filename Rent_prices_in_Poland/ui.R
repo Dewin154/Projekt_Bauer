@@ -35,6 +35,8 @@ ui <- page_sidebar(
     
     actionButton("action_search", label = "Suchen"),
     
+    
+    
     selectInput(
       "input_city",
       label = "Stadt Wählen",
@@ -70,12 +72,12 @@ ui <- page_sidebar(
     checkboxInput("balcony", "Balkon", value = FALSE, width = NULL),
     checkboxInput("elevator", "Aufzug", value = FALSE, width = NULL),
     
-    numericInput("input_squaremeters", "Quadratmeter", 0, min = 1, max = 10000),
+    numericInput("input_squaremeters", "Quadratmeter", 0, min = 25, max = 10000),
     
     numericInput("input_rooms", "Anzahl der Räume", 0, min = 1, max = 10),
  
     numericInput("input_floor", "Stockwerk", 0, min = 1, max = 20),
-    
+
     
     sliderInput(
       "input_buildyear", "Baujahr",

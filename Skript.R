@@ -60,14 +60,14 @@ data_clean$floor <- as.factor(data_clean$floor)
 data_clean$squareMeters <- as.numeric(data_clean$squareMeters)
 
 #Richtiges Konvertieren (von Factor auf Numeric), erst werden die daten als character konvertiert, die Kommata für Punkte ersetzt (englische Schreibweise) und dann ins Numeric Konvertiert
-orig_data$squareMeters <- as.numeric(gsub(",", ".", as.character(orig_data$squareMeters)))
-orig_data$squareMeters <- as.numeric(gsub(",", ".", as.character(orig_data$squareMeters)))
-orig_data$centreDistance <- as.numeric(gsub(",", ".", as.character(orig_data$centreDistance)))
-orig_data$schoolDistance <- as.numeric(gsub(",", ".", as.character(orig_data$schoolDistance)))
-orig_data$clinicDistance <- as.numeric(gsub(",", ".", as.character(orig_data$clinicDistance)))
-orig_data$pharmacyDistance <- as.numeric(gsub(",", ".", as.character(orig_data$pharmacyDistance)))
-orig_data$kindergartenDistance <- as.numeric(gsub(",", ".", as.character(orig_data$kindergartenDistance)))
-orig_data$priceInEuro <- as.numeric(gsub(",", ".", as.character(orig_data$priceInEuro)))
+data_clean$squareMeters <- as.numeric(gsub(",", ".", as.character(data_clean$squareMeters)))
+data_clean$squareMeters <- as.numeric(gsub(",", ".", as.character(data_clean$squareMeters)))
+data_clean$centreDistance <- as.numeric(gsub(",", ".", as.character(data_clean$centreDistance)))
+data_clean$schoolDistance <- as.numeric(gsub(",", ".", as.character(data_clean$schoolDistance)))
+data_clean$clinicDistance <- as.numeric(gsub(",", ".", as.character(data_clean$clinicDistance)))
+data_clean$pharmacyDistance <- as.numeric(gsub(",", ".", as.character(data_clean$pharmacyDistance)))
+data_clean$kindergartenDistance <- as.numeric(gsub(",", ".", as.character(data_clean$kindergartenDistance)))
+data_clean$priceInEuro <- as.numeric(gsub(",", ".", as.character(data_clean$priceInEuro)))
 
 #Zählt die Anzahl aller Einträge pro Stadt
 city_counts <- table(data$city)
@@ -98,7 +98,7 @@ library(corrplot)
 cor_matrix <- cor(data3, use = "complete.obs") #Matrix erstellen
 
 corrplot(cor_matrix, method = "color", 
-                   col = colorRampPalette(c("red", "white", "blue"))(200),
+                   col = colorRampPalette(c("red", "white", "blue"))(200), type = "upper",
                    tl.col = "black", tl.srt = 45, addCoef.col = "black") #Plot erstellen
 
 
@@ -123,8 +123,11 @@ r2 <- 1 - (sum((test_data_zielvariable - predictions)^2) / sum((test_data_zielva
 #Model speichern damit er für andere in der App verfügbar ist. Model soll im ordner der Shiny App gespeichert werden
 saveRDS(modell_linear, "C:/Users/peter/THD/3_Semester/Assistenzsysteme/Projekt_Bauer/Rent_prices_in_Poland/modell_linear.rds")
 
-
-
-
+#Boxplot kalkulieren
+Q1 <- quantile(data$priceInEuro, 0.25)
+Q3 <- quantile(data$priceInEuro, 0.75)
+IQR <- Q3 - Q1
+lower_whisker <- Q1 - 1.5 * IQR
+upper_whisker <- Q3 + 1.5 * IQR
 
 
