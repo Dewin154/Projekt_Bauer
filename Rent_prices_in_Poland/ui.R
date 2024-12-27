@@ -24,8 +24,9 @@ ui <- page_sidebar(
       style = "font-size: 30px; font-family: Arial, sans-serif;"
     ),
     
+    # Button for Dark Mode
     tags$div(
-      input_dark_mode(), # Button for Dark Mode
+      input_dark_mode(), 
       style = "font-size: 25px;"
     )
     
@@ -74,9 +75,9 @@ ui <- page_sidebar(
     
     numericInput("input_squaremeters", "Quadratmeter", 0, min = 25, max = 10000),
     
-    numericInput("input_rooms", "Anzahl der Räume", 0, min = 1, max = 10),
+    numericInput("input_rooms", "Anzahl der Räume", 1, min = 1, max = 10),
  
-    numericInput("input_floor", "Stockwerk", 0, min = 1, max = 20),
+    numericInput("input_floor", "Stockwerk", 1, min = 1, max = 20),
 
     
     sliderInput(
@@ -96,9 +97,6 @@ ui <- page_sidebar(
 
   ),
   
-  
-  "Output",
-  
   #card ist in Shiny das was <div> in HTML ist
   card(
     card_body(
@@ -114,13 +112,13 @@ ui <- page_sidebar(
   card(
     card_header("Interaktive Karte"),
     card_body(
-      leafletOutput("mymap"),
+      leafletOutput("mymap", width = "550px", height = "500px"),
       )
     ),
   
-  card(
-    leafletOutput("mymap2")
-  )
+  #card(
+  #  leafletOutput("mymap2")
+  #)
   
   )
 
