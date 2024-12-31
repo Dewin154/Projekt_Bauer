@@ -62,12 +62,6 @@ ui <- page_sidebar(
       selected="Warszawa"
     ),
     
-    #checkboxGroupInput("input_checkbox", "Ausstattung:",
-    #                   c("Parkplatz" = "parking_space",
-    #                     "Balkon" = "balcony",
-    #                     "Aufzug" = "elevator")),
-    
-    
     #Hier wegen Einfachkeit. Leichtere Handhabung in server.R bei der Berechnung des prog. Preises
     checkboxInput("parking_space", "Parkplatz", value = FALSE, width = NULL),
     checkboxInput("balcony", "Balkon", value = FALSE, width = NULL),
@@ -115,10 +109,6 @@ ui <- page_sidebar(
       leafletOutput("mymap", width = "550px", height = "500px"),
       )
     ),
-  
-  #card(
-  #  leafletOutput("mymap2")
-  #)
   
   )
 

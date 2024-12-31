@@ -32,7 +32,7 @@ server <- function(input, output) {
     #Prüfung ob richtige square meters eingegeben wurden
     if (as.numeric(input$input_squaremeters) < 25) {
       showNotification(
-        "Die Fläche muss mindestens 25 Quadratmeter betragen!",
+        "Für korrekte Vorhersage muss die Fläche mindestens 25 Quadratmeter betragen!",
         type = "error",
         duration = 8
       )
@@ -154,7 +154,7 @@ server <- function(input, output) {
         ~Latitude,
         popup = ~paste0(
           "<b>Stadt:</b> ", city, "<br>",
-          "<b>Mietpreis:</b> ", ifelse(is.na(predictions), "NA", round(predictions, 2))
+          "<b>Mietpreis:</b> ", ifelse(is.na(predictions), "NA", paste0(round(predictions, 2), " €"))
         )
       )
   })
