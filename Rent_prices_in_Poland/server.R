@@ -18,7 +18,7 @@ server <- function(input, output) {
   #Model wird bei jedem öffnen der App geladen
   modell <- readRDS("C:/Users/peter/THD/3_Semester/Assistenzsysteme/Projekt_Bauer/Rent_prices_in_Poland/modell_log_cleaned.rds")
   
-   #Data Frame für die Markers und deren Position auf der Karte und Vorhersagen
+  #Data Frame für die Markers und deren Position auf der Karte und Vorhersagen
   df_city_coords <- data.frame(
     city = c("Warszawa", "Krakow", "Wroclaw", "Lodz", "Poznan", "Katowice", "Gdansk", "Szczecin", "Lublin", "Bydgoszcz", "Rzeszow", "Gdynia", "Bialystok", "Radom", "Czestochowa"),
     Latitude = c(52.237049, 50.049683, 51.107883, 51.759445, 52.409538, 50.270908, 54.372158, 53.428543, 51.246452, 53.123482, 50.041187, 54.51889, 53.13333, 51.40253, 50.79646),
@@ -38,9 +38,9 @@ server <- function(input, output) {
       )
       output$result <- renderText({ "" })
       return() # Beendet die Funktion, um weitere Schritte zu verhindern
-     
+      
     } else {
-    
+      
       feature_city <- tolower(as.character(input$input_city))  
       feature_sqm <- as.numeric(input$input_squaremeters)
       feature_rooms <- as.integer(input$input_rooms)
@@ -51,7 +51,7 @@ server <- function(input, output) {
       feature_hasParkingSpace <- ifelse(input$parking_space, "yes", "no")
       feature_hasBalcony <- ifelse(input$balcony, "yes", "no")
       feature_hasElevator <- ifelse(input$elevator, "yes", "no")
-    
+      
       # Alle Features in ein Data Frame packen.
       model_features <- data.frame(
         city = feature_city,
@@ -81,7 +81,7 @@ server <- function(input, output) {
   # Output des prognostizierten Preises
   output$predicted_price <- renderText({
     paste0(price_prediction(), " € ≙ ", round(price_prediction()*4.27, 2), " zł")
-  
+    
   })
   
   #Berechnung der Preise für den Input für andere Städte, redundater Code!!!
@@ -157,6 +157,6 @@ server <- function(input, output) {
           "<b>Mietpreis:</b> ", ifelse(is.na(predictions), "NA", round(predictions, 2))
         )
       )
-    })
+  })
   
 }
