@@ -123,7 +123,7 @@ r2 <- 1 - (sum((test_data_zielvariable - predictions)^2) / sum((test_data_zielva
 #Model speichern damit er für andere in der App verfügbar ist. Model soll im ordner der Shiny App gespeichert werden
 saveRDS(modell_linear, "C:/Users/peter/THD/3_Semester/Assistenzsysteme/Projekt_Bauer/Rent_prices_in_Poland/modell_linear.rds")
 
-#Boxplot kalkulieren
+#Boxplot berechnen
 Q1 <- quantile(data$priceInEuro, 0.25)
 Q3 <- quantile(data$priceInEuro, 0.75)
 IQR <- Q3 - Q1

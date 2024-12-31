@@ -104,7 +104,7 @@ ui <- page_sidebar(
         title = "Prognostizierter Mietpreis",
         value = textOutput("predicted_price"),
         showcase = bsicons::bs_icon("house-check-fill",size = "0.9em"), #https://icons.getbootstrap.com/ alle möglichen icons
-        theme = "teal"
+        theme = "teal" #teal
       ),
     )
   ),
