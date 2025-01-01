@@ -1,11 +1,6 @@
 #
 # This is the user-interface definition of a Shiny web application. You can
 # run the application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    https://shiny.posit.co/
-#
 
 library(shiny)
 library(bslib)
@@ -34,7 +29,7 @@ ui <- page_sidebar(
   # Beinhaltet alle sidebar elemente wie action boxes etc.
   sidebar = sidebar(
     
-    actionButton("action_search", label = "Suchen"),
+    actionButton("action_search", label = "Prognose"),
     
     
     
