@@ -15,8 +15,11 @@ library(shinyBS)
 # Define server logic ----
 server <- function(input, output) {
   
-  #Model wird bei jedem öffnen der App geladen
-  modell <- readRDS("C:/Users/peter/THD/3_Semester/Assistenzsysteme/Projekt_Bauer/Rent_prices_in_Poland/modell_log_cleaned.rds")
+  #Model wird bei jedem Öffnen der App geladen
+  #modell <- readRDS("D:/dev/Projekt_Bauer/Rent_prices_in_Poland/modell_log_cleaned.rds")
+  
+  setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+  modell <- readRDS("modell_log_cleaned.rds")
   
   #Data Frame für die Markers und deren Position auf der Karte und Vorhersagen
   df_city_coords <- data.frame(
@@ -84,10 +87,10 @@ server <- function(input, output) {
     
   })
   
-  #Berechnung der Preise für den Input für andere Städte, redundater Code!!!
-  price_predictions_for_other_cities <- eventReactive(input$action_search, {
+  #Berechnung der Preise für den Input für andere Städte
+  price_predictions_for_all_cities <- eventReactive(input$action_search, {
     
-    predictions_for_other_cities <- list()
+    predictions_for_all_cities <- list()
     
     #Loop durch alle Städte
     for (i in 1:nrow(df_city_coords)) {
@@ -109,11 +112,11 @@ server <- function(input, output) {
       )
       
       #Preisvorhersagen für jede Stadt
-      predictions_for_other_cities[[city_name]] <- exp(predict(modell, newdata = model_features))
+      predictions_for_all_cities[[city_name]] <- exp(predict(modell, newdata = model_features))
     }
     
     #Füge die Vorhersagen in die Liste der Städte mit Coords. ein
-    df_city_coords$predictions <- unlist(predictions_for_other_cities)
+    df_city_coords$predictions <- unlist(predictions_for_all_cities)
     #Gibt geupdatete Liste züruck
     df_city_coords  
   })
@@ -145,7 +148,7 @@ server <- function(input, output) {
   
   #Aktualisiert die Karte bei jedem "Search"
   observeEvent(input$action_search, {
-    updated_coords <- price_predictions_for_other_cities()
+    updated_coords <- price_predictions_for_all_cities()
     
     leafletProxy("mymap", data = updated_coords) %>%
       clearMarkers() %>%
