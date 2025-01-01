@@ -1,11 +1,7 @@
 #
 # This is the server logic of a Shiny web application. You can run the
 # application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    https://shiny.posit.co/
-#
+
 
 library(shiny)
 library(bslib)
@@ -16,8 +12,6 @@ library(shinyBS)
 server <- function(input, output) {
   
   #Model wird bei jedem Öffnen der App geladen
-  #modell <- readRDS("D:/dev/Projekt_Bauer/Rent_prices_in_Poland/modell_log_cleaned.rds")
-  
   setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
   modell <- readRDS("modell_log_cleaned.rds")
   
@@ -29,10 +23,10 @@ server <- function(input, output) {
     predictions <- NA
   )
   
-  #Funktion für die Prognose des Preises basierend auf den Input für den grünen Balken in der App
+  #Funktion für die Prognose des Preises
   price_prediction <- eventReactive(input$action_search, {
     
-    #Prüfung ob richtige square meters eingegeben wurden
+    #Prüfung ob realistische square meters wert eingegeben wurde
     if (as.numeric(input$input_squaremeters) < 25) {
       showNotification(
         "Für korrekte Vorhersage muss die Fläche mindestens 25 Quadratmeter betragen!",
@@ -40,7 +34,7 @@ server <- function(input, output) {
         duration = 8
       )
       output$result <- renderText({ "" })
-      return() # Beendet die Funktion, um weitere Schritte zu verhindern
+      return() # Vorzeitiges Beenden
       
     } else {
       
@@ -55,7 +49,6 @@ server <- function(input, output) {
       feature_hasBalcony <- ifelse(input$balcony, "yes", "no")
       feature_hasElevator <- ifelse(input$elevator, "yes", "no")
       
-      # Alle Features in ein Data Frame packen.
       model_features <- data.frame(
         city = feature_city,
         squareMeters = feature_sqm,
@@ -70,7 +63,7 @@ server <- function(input, output) {
         stringsAsFactors = FALSE
       )
       
-      #Eigentliche Berechnung des Preises
+      # Prognose des Preises
       prediction <- exp(predict(modell, newdata = model_features)) ##### exp() FUNKTION für Log Modell
       
       if (prediction <= 0){
@@ -81,13 +74,12 @@ server <- function(input, output) {
     }
   })
   
-  # Output des prognostizierten Preises
+  # Prognose im UI anzeigen
   output$predicted_price <- renderText({
     paste0(price_prediction(), " € ≙ ", round(price_prediction()*4.27, 2), " zł")
-    
   })
   
-  #Berechnung der Preise für den Input für andere Städte
+  #Berechnung der Preise für den Input für alle Städte
   price_predictions_for_all_cities <- eventReactive(input$action_search, {
     
     predictions_for_all_cities <- list()
@@ -111,23 +103,20 @@ server <- function(input, output) {
         stringsAsFactors = FALSE
       )
       
-      #Preisvorhersagen für jede Stadt
+      # Prognose für einzelne Stadt
       predictions_for_all_cities[[city_name]] <- exp(predict(modell, newdata = model_features))
     }
     
-    #Füge die Vorhersagen in die Liste der Städte mit Coords. ein
+    #Füge die Vorhersagen in die Liste der Städte mit Coords ein
     df_city_coords$predictions <- unlist(predictions_for_all_cities)
-    #Gibt geupdatete Liste züruck
+    #Gibt geupdatete Liste zurück
     df_city_coords  
   })
   
-  
-  
-  #Der %>%-Operator ist ein Pipe Operator, Output der einen Funktion ist Input für die Andere.
   #Rendert die Karte mit Markern auf den Städten
   #fitBounds begrenzt die Sicht nur auf Polen
   output$mymap <- renderLeaflet({
-    leaflet(df_city_coords) %>%
+    leaflet(df_city_coords) %>% # %>%-Operator ist ein Pipe Operator
       addProviderTiles(
         providers$CartoDB.Positron,
         options = providerTileOptions(noWrap = TRUE)
