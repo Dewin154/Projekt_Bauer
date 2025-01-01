@@ -29,7 +29,7 @@ ui <- page_sidebar(
   # Beinhaltet alle sidebar elemente wie action boxes etc.
   sidebar = sidebar(
     
-    actionButton("action_search", label = "Suchen"),
+    actionButton("action_search", label = "Prognose"),
     
     
     
