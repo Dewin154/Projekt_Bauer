@@ -131,3 +131,9 @@ lower_whisker <- Q1 - 1.5 * IQR
 upper_whisker <- Q3 + 1.5 * IQR
 
 
+klassen <- cut(cleaned_data$priceInEuro, breaks = c(0,300,600,900,1200,1500,1800), right = TRUE, include.lowest = TRUE)
+
+
+hist(cleaned_data$priceInEuro, breaks = c(0,200,400,600,800,1000,1200,1400,1600), right = TRUE, col = "skyblue", border = "black",
+     main = "Histogramm mit Klassen", xlab = "Werte", ylab = "Häufigkeit")
+
